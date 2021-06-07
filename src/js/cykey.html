@@ -1,0 +1,129 @@
+<html>
+<head>
+	<title>拉丁字母转西里尔字母</title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="keywords" content="西里尔"/>
+    <meta name="author" content="charleyxiao"/>
+    <script src="jquery-3.5.1.js"></script>
+    <style>
+    	@keyframes fade-in{
+    		0%{opacity: 0;}
+    		40%{opacity: 0;}
+    		100%{opacity: 1;}
+    	}
+    	@-webkit-keyframes fade-in{
+    		0%{opacity: 0;}
+    		40%{opacity: 0;}
+    		100%{opacity: 1;}
+    	}
+    	#main{
+    		background-color: #F7EED6;
+    		position: absolute;
+    		height: 300px;
+    		width: 600px;
+    		top: 50%;
+    		left: 50%;
+    		transform: translate(-50%,-50%);
+    		/*-webkit-transition-duration: 0.7s;*/
+            transition-duration: 0.7s;
+            animation: fade-in;
+            animation-duration: 1s;
+            -webkit-animation: fade-in 1s;
+    	}
+    	button{
+            background-color: white; 
+            border: 2px solid #008CBA;
+            color: black;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            -webkit-transition-duration: 0.4s; 
+            transition-duration: 0.4s;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            animation: fade-in;
+            animation-duration: 1s;
+            -webkit-animation: fade-in 1s;
+        }
+        button:hover{
+            background-color: #008CBA;
+            color: white;
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+    </style>
+    <script>
+    	function begin(){
+    		let ar=$("textarea#input").val();
+    		var len=ar.length;
+    		var ot="";
+    		for(var i=0;i<len;i+=1){
+    			if(ar[i]=='y'){//y yo ya yu
+    				if(ar[i+1]=='o')ot+="ё",i+=1;
+    				else if(ar[i+1]=='a')ot+="я",i+=1;
+    				else if(ar[i+1]=='u')ot+="ю",i+=1;
+    				else ot+="ы";
+    			}
+    			else if(ar[i]=='j')ot+="й";
+    			else if(ar[i]=='t'){//t ts
+    				if(ar[i+1]=='s')ot+="ц",i+=1;
+    				else ot+="т";
+    			}
+    			else if(ar[i]=='u')ot+="у";
+    			else if(ar[i]=='k'){//k kh
+    				if(ar[i+1]=='h')ot+="х",i+=1;
+    				else ot+="к";
+    			}
+    			else if(ar[i]=='e'){//e э
+    				if(ar[i+1]=='2')ot+="э",i+=1;
+    				else ot+="е";
+    			}
+    			else if(ar[i]=='n')ot+="н";
+    			else if(ar[i]=='g')ot+="г";
+    			else if(ar[i]=='s'){//s sh sch
+    				if(ar[i+1]=='h')ot+="ш",i+=1;
+    				else if(ar[i+1]=='c')ot+="щ",i+=2;
+    				else ot+="с";
+    			}
+    			else if(ar[i]=='z'){//z zh
+    				if(ar[i+1]=='h')ot+="ж",i+=1;
+    				else ot+="з";
+    			}
+    			else if(ar[i]=='\''){//' ''
+    				if(ar[i+1]=='\'')ot+="ъ",i+=1;
+    				else ot+="ь";
+    			}
+    			else if(ar[i]=='f')ot+="ф";
+    			else if(ar[i]=='v')ot+="в";
+    			else if(ar[i]=='a')ot+="а";
+    			else if(ar[i]=='p')ot+="п";
+    			else if(ar[i]=='r')ot+="р";
+    			else if(ar[i]=='o')ot+="о";
+    			else if(ar[i]=='l')ot+="л";
+    			else if(ar[i]=='d')ot+="д";
+    			else if(ar[i]=='c')ot+="ч",i+=1;
+    			else if(ar[i]=='m')ot+="м";
+    			else if(ar[i]=='i')ot+="и";
+    			else if(ar[i]=='t')ot+="т";
+    			else if(ar[i]=='b')ot+="б";
+    			else if(ar[i]==" ")ot+=" ";
+    			else ot+=ar[i];
+    		}
+    		$("textarea#output").val(ot);
+    	}
+    </script>
+</head>
+<body>
+	<div id="main">
+		<textarea cols="40" rows="1" id="input" style="border-color: black;border-radius: 2px;background-color: rgba(241,241,241,.98);width: 450px;height: 37px;padding: 10px;resize: none;position: relative;top: 10px;left: 75px;" placeholder="输入"></textarea>
+		<textarea cols="40" rows="1" id="output" style="border-color: black;border-radius: 2px;background-color: rgba(241,241,241,.98);width: 450px;height: 37px;padding: 10px;resize: none;position: relative;top: 215px;left: 75px;" placeholder="注意：输入时э用e2代替，й用j代替！"></textarea>
+	</div>
+	<button onclick="begin()">转换</button>
+</body>
+</html>

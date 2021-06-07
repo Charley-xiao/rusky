@@ -1,0 +1,44 @@
+<html>
+<head>
+	<title>Rusky</title>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" sizes="57x57" href="src/icon.jpg"/>
+	<meta name="keywords" content="russian"/>
+    <meta name="author" content="Charleyxiao"/>
+	<script src="src/js/jquery-3.5.1.js"></script>
+	<script src="src/js/main.js"></script>
+	<link href="src/css/main.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+	<div id="logo">
+  		<a onclick="titleEnter()">
+   			<h1><span>R u s s i a n</span>&nbsp;&nbsp;<span>V o c a b u l a r y</span></h1>
+  		</a>
+ 	</div>
+ 	<div id="options" class="mainBoard" style="display: none;">
+ 		<button id="learnNew" onclick="learnNewWords()">学习新单词</button><br>
+ 		<button id="review" onclick="reviewWords()">复习单词</button><br>
+ 		<button id="settings" onclick="showSettings()">设置</button><br>
+ 		<div style="position: absolute;left: 50%;top: 100%;transform: translate(-50%,0);">你已经学习了<a id="wordCounter"></a>个单词</div>
+ 	</div>
+ 	<div id="mainLearnNew" class="mainBoard" style="display: none;">
+ 		<center><h2>请输入背单词数量：</h2></center>
+ 		<center><textarea cols="20" rows="10" class="inputHolder" id="inputCnt" placeholder="在此输入"></textarea></center>
+ 	</div>
+ 	<div id="startLearnNew" class="largeMainBoard" style="display: none;">
+ 		<center><a id="navigate"></a></center>
+ 		<div id="newWordHolder"></div>
+ 		<div id="newWordExpl"></div>
+ 		<div id="optionPack">
+ 			<center><button id="knowNewWord" onclick="addToLearnedList()">熟悉</button></center>
+ 			<center><button id="dontknowNewWord" onclick="addToReviewList()">不熟悉</button></center>
+ 			<center><button id="nxtNewWord">下一个</button></center>
+ 		</div>
+ 	</div>
+ 	<div id="warning" style="display: none;">
+ 		<center><h1>提示</h1></center><br>
+		<center><a id="warningContent"></a></center><br>
+		<center><button onclick="showWarning(null,0)">确定</button></center>
+	</div>
+</body>
+</html>
