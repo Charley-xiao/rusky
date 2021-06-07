@@ -1,6 +1,7 @@
 //loading json
 
 var json="";
+
 window.onload=function(){
     var url="src/js/words.json";
     var request=new XMLHttpRequest();
@@ -94,6 +95,15 @@ function clearReviewList(){setCookie("review","",configExp);}
 var wordLearned=-1;
 var gottenArr=[];
 
+function showWord(target){
+	var targetStr=target.innerHTML;
+	for(var i=0;i<json.wordsAppend.length;i++){
+		if(json.wordsAppend[i].ru==targetStr){
+			showWarning(json.wordsAppend[i].ru+"<br>"+json.wordsAppend[i].zh,1);
+			break;
+		}
+	}
+}
 function chooseWords(wordcnt,fromLearned){
 	while(gottenArr.length>0) gottenArr.pop();
 	var learnedList=getCookie("list");
@@ -122,7 +132,34 @@ function titleEnter(){
 function displayNewWord(wordId){
 	console.log(wordId);
 	document.getElementById("newWordHolder").innerHTML=json.words[wordId].ru;
-
+	var eleZH=document.getElementById("newWordZH");
+	eleZH.innerHTML="";
+	if(json.words[wordId].ps==1){
+		if(json.words[wordId].prop=="mas") eleZH.innerHTML="[阳]";
+		else if(json.words[wordId].prop=="neu") eleZH.innerHTML="[中]";
+		else if(json.words[wordId].prop=="fem") eleZH.innerHTML="[阴]";
+		else if(json.words[wordId].prop=="pl") eleZH.innerHTML="[复]";
+		eleZH.innerHTML+=json.words[wordId].zh;
+	}
+	var eleDevs=document.getElementById("devs");
+	eleDevs.innerHTML="";
+	if(json.words[wordId].intoN[0]!=""){
+		eleDevs.innerHTML+="名词派生："
+		for(var i=0;i<json.words[wordId].intoN.length;i++){
+			eleDevs.innerHTML+="<a class=\"linkEffect\" onclick=\"showWord(this)\">"+json.words[wordId].intoN[i]+"</a>"
+			if(i==json.words[wordId].intoN.length-1) eleDevs.innerHTML+=". ";
+			else eleDevs.innerHTML+="；";
+		}
+	}
+	if(json.words[wordId].intoV[0]!=""){
+		
+	}
+	if(json.words[wordId].intoA[0]!=""){
+		
+	}
+	if(json.words[wordId].intoAdv[0]!=""){
+		
+	}
 }
 function addToLearnedList(){wordLearned=1;}
 function addToReviewList(){wordLearned=0;}
@@ -174,7 +211,8 @@ async function learnNewWords(){
 			}
 			await nxtWord();
 			if(wordLearned==0) setWordLearned(gottenArr[i-1]);
-			else setWordReview(gottenArr[i-1]);
+			else if(wordLearned==1) setWordReview(gottenArr[i-1]);
+			else showWarning("请选择熟悉程度！",1)
 		}
 		wordLearned=-1;
 	}

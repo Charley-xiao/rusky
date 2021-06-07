@@ -175,3 +175,19 @@ button:hover {
     font-size: 40px;
     letter-spacing: -20px;
 }
+#newWordExpl{
+    position: absolute;
+    top: 20%;
+    left: 1%;
+    height: 40%;
+    width: 98%;
+}
+.linkEffect{
+    letter-spacing: -7px;
+}
+.linkEffect:hover{
+    background-color: black;
+    color: white;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    cursor: pointer;
+}
