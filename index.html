@@ -8,6 +8,7 @@
 	<script src="src/js/jquery-3.5.1.js"></script>
 	<script src="src/js/main.js"></script>
 	<link href="src/css/main.css" rel="stylesheet" type="text/css"/>
+	<link href="src/css/toggle.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 	<div id="logo">
@@ -18,7 +19,7 @@
  	<div id="options" class="mainBoard" style="display: none;">
  		<button id="learnNew" onclick="learnNewWords()">学习新单词</button><br>
  		<button id="review" onclick="reviewWords()">复习单词</button><br>
- 		<button id="settings" onclick="showSettings()">设置</button><br>
+ 		<button id="settings" onclick="displayElement('mainSettings',1)">设置</button><br>
  		<div style="position: absolute;left: 50%;top: 100%;transform: translate(-50%,0);">你已经学习了<a id="wordCounter"></a>个单词</div>
  	</div>
  	<div id="mainLearnNew" class="mainBoard" style="display: none;">
@@ -38,6 +39,18 @@
  			<center><button id="dontknowNewWord" onclick="addToReviewList()">不熟悉</button></center>
  			<center><button id="nxtNewWord">下一个</button></center>
  		</div>
+ 	</div>
+ 	<div id="mainSettings" style="display: none;">
+ 		<center><h1>设置</h1></center><br>
+ 		<div class="mid">
+			<label class="rocker rocker-small">
+				<input type="checkbox">
+				<span class="switch-left" onclick="changeMusicSetting()">On</span>
+				<span class="switch-right" onclick="changeMusicSetting()">Off</span>
+			</label>
+			<h2>音效</h2>
+		</div><br>
+ 		<center><button onclick="displayElement('mainSettings',0)">完成</button></center>
  	</div>
  	<div id="warning" style="display: none;">
  		<center><h1>提示</h1></center><br>

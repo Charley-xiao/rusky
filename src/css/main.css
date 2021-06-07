@@ -125,7 +125,7 @@ button:hover {
     width: 50%;
     height: 40%;
     transform: translate(-50%,-50%);
-    color: white;
+    color: black;
     transition-duration: 1s;
     border-radius: 50px;
     background: #55b9f3;
@@ -190,4 +190,18 @@ button:hover {
     color: white;
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
     cursor: pointer;
+}
+#mainSettings{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    height: 60%;
+    transform: translate(-50%,-50%);
+    color: black;
+    transition-duration: 1s;
+    border-radius: 50px;
+    background: #8fadfa;
+    box-shadow:  20px 20px 60px #7a93d5,
+             -20px -20px 60px #a4c7ff;
 }

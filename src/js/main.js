@@ -16,6 +16,8 @@ window.onload=function(){
 
 //basics
 
+var configMusicAvailability=0;
+
 function getrand(upsize){
     return parseInt(Math.random()*upsize+1);
 }
@@ -31,7 +33,10 @@ function showWarning(warnStr,vis){
 		document.getElementById("warningContent").innerHTML="<h2>"+warnStr+"</h2>";
 	}
 }
-
+function changeMusicSetting(){
+	configMusicAvailability^=1;
+	console.log("configMusicAvailability: "+configMusicAvailability);
+}
 //initials
 
 var configExp=1000;
@@ -99,7 +104,7 @@ function showWord(target){
 	var targetStr=target.innerHTML;
 	for(var i=0;i<json.wordsAppend.length;i++){
 		if(json.wordsAppend[i].ru==targetStr){
-			showWarning(json.wordsAppend[i].ru+"<br>"+json.wordsAppend[i].zh,1);
+			showWarning("<a style=\"letter-spacing: -7px;\">"+json.wordsAppend[i].ru+"</a><br>"+json.wordsAppend[i].zh,1);
 			break;
 		}
 	}
@@ -108,13 +113,9 @@ function chooseWords(wordcnt,fromLearned){
 	while(gottenArr.length>0) gottenArr.pop();
 	var learnedList=getCookie("list");
 	var learnedArray=learnedList.split(',');
-	if(wordcnt>learnedArray.length){
-		showWarning("超过最大值！",1);
-		return;
-	}
 	var availableCnt=0;
 	while(availableCnt!=wordcnt){
-		var randId=getrand(learnedArray.length)-1;
+		var randId=getrand(json.wordsCnt)-1;
 		var rndIdS=randId.toString();
 		if(fromLearned==0&&learnedArray.indexOf(rndIdS)==-1&&gottenArr.indexOf(rndIdS)==-1) gottenArr[availableCnt]=rndIdS,availableCnt++;
 		if(fromLearned==1&&learnedArray.indexOf(rndIdS)!=-1&&gottenArr.indexOf(rndIdS)==-1) gottenArr[availableCnt]=rndIdS,availableCnt++;
@@ -134,32 +135,46 @@ function displayNewWord(wordId){
 	document.getElementById("newWordHolder").innerHTML=json.words[wordId].ru;
 	var eleZH=document.getElementById("newWordZH");
 	eleZH.innerHTML="";
-	if(json.words[wordId].ps==1){
-		if(json.words[wordId].prop=="mas") eleZH.innerHTML="[阳]";
-		else if(json.words[wordId].prop=="neu") eleZH.innerHTML="[中]";
-		else if(json.words[wordId].prop=="fem") eleZH.innerHTML="[阴]";
-		else if(json.words[wordId].prop=="pl") eleZH.innerHTML="[复]";
-		eleZH.innerHTML+=json.words[wordId].zh;
-	}
+	eleZH.innerHTML+=json.words[wordId].zh+"<br>";
 	var eleDevs=document.getElementById("devs");
 	eleDevs.innerHTML="";
 	if(json.words[wordId].intoN[0]!=""){
-		eleDevs.innerHTML+="名词派生："
+		eleDevs.innerHTML+="名词派生：";
 		for(var i=0;i<json.words[wordId].intoN.length;i++){
-			eleDevs.innerHTML+="<a class=\"linkEffect\" onclick=\"showWord(this)\">"+json.words[wordId].intoN[i]+"</a>"
+			eleDevs.innerHTML+="<a class=\"linkEffect\" onclick=\"showWord(this)\">"+json.words[wordId].intoN[i]+"</a>";
 			if(i==json.words[wordId].intoN.length-1) eleDevs.innerHTML+=". ";
 			else eleDevs.innerHTML+="；";
 		}
+		eleDevs.innerHTML+="<br>";
 	}
 	if(json.words[wordId].intoV[0]!=""){
-		
+		eleDevs.innerHTML+="动词派生：";
+		for(var i=0;i<json.words[wordId].intoV.length;i++){
+			eleDevs.innerHTML+="<a class=\"linkEffect\" onclick=\"showWord(this)\">"+json.words[wordId].intoV[i]+"</a>";
+			if(i==json.words[wordId].intoV.length-1) eleDevs.innerHTML+=". ";
+			else eleDevs.innerHTML+="；";
+		}
+		eleDevs.innerHTML+="<br>";
 	}
 	if(json.words[wordId].intoA[0]!=""){
-		
+		eleDevs.innerHTML+="形容词派生：";
+		for(var i=0;i<json.words[wordId].intoA.length;i++){
+			eleDevs.innerHTML+="<a class=\"linkEffect\" onclick=\"showWord(this)\">"+json.words[wordId].intoA[i]+"</a>";
+			if(i==json.words[wordId].intoA.length-1) eleDevs.innerHTML+=". ";
+			else eleDevs.innerHTML+="；";
+		}
+		eleDevs.innerHTML+="<br>";
 	}
 	if(json.words[wordId].intoAdv[0]!=""){
-		
+		eleDevs.innerHTML+="副词派生：";
+		for(var i=0;i<json.words[wordId].intoAdv.length;i++){
+			eleDevs.innerHTML+="<a class=\"linkEffect\" onclick=\"showWord(this)\">"+json.words[wordId].intoAdv[i]+"</a>";
+			if(i==json.words[wordId].intoAdv.length-1) eleDevs.innerHTML+=". ";
+			else eleDevs.innerHTML+="；";
+		}
+		eleDevs.innerHTML+="<br>";
 	}
+	eleDevs.innerHTML+=json.words[wordId].addon;
 }
 function addToLearnedList(){wordLearned=1;}
 function addToReviewList(){wordLearned=0;}
@@ -167,6 +182,8 @@ async function learnNewWords(){
 	displayElement("options",0);displayElement("logo",0);displayElement("mainLearnNew",1);
 	var chosenWordCnt=configNewLearn;
 	var validFlag=0;
+	//var tempArrLen=json.wordsCnt;
+	//console.log("tempArrLen:"+tempArrLen);
 	while(validFlag==0){
 		document.addEventListener("keypress",e=>{
 			if((e.keyCode==13||e.keyCode==1)&&fulfiller){
@@ -188,7 +205,8 @@ async function learnNewWords(){
 		if(tempWordCnt>=1&&tempWordCnt<=100){
 			validFlag=1;
 			chosenWordCnt=tempWordCnt;
-			continue;
+			//window.alert(chosenWordCnt);
+			break;
 		}
 		showWarning("输入不合法！",1);
 	}
